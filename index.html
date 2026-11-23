@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مدرسة القديس سلوان للتنشئة المسيحية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #FAF8F5;
+      --bg-card: #FFFFFF;
+      --primary: #8C2D2D;
+      --primary-hover: #722323;
+      --primary-light: #FDF4F4;
+      --accent: #C59B43;
+      --accent-light: #FBF7EE;
+      --text-dark: #2C2A29;
+      --text-muted: #6E6864;
+      --border-soft: #ECE6DF;
+      --whatsapp: #25D366;
+      --danger: #C0392B;
+      --danger-bg: #FDEDEC;
+      --success: #1E8449;
+      --success-bg: #EAFAF1;
+      --warning: #B9770E;
+      --warning-bg: #FEF9E7;
+      --sidebar-width: 260px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+      line-height: 1.75;
+    }
+
+    /* Sidebar & Navigation */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background-color: var(--bg-card);
+      border-left: 1px solid var(--border-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 16px;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-brand {
+      text-align: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .sidebar-brand img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      margin-bottom: 8px;
+      background-color: #fff;
+    }
+
+    .sidebar-brand h1 {
+      font-size: 1rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .sidebar-brand span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 10px 14px;
+      border-radius: 10px;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .sidebar-nav a:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .sidebar-footer {
+      padding-top: 14px;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .btn-login {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background-color: var(--primary);
+      color: #FFFFFF !important;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      transition: background-color 0.25s;
+    }
+
+    .btn-login:hover { background-color: var(--primary-hover); }
+
+    .nav-checkbox { display: none; }
+
+    .mobile-topbar {
+      display: none;
+      background-color: var(--bg-card);
+      padding: 10px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      border-bottom: 1px solid var(--border-soft);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mobile-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    .mobile-title img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      object-fit: cover;
+      background-color: #fff;
+    }
+
+    .menu-toggle {
+      background-color: var(--primary-light);
+      color: var(--primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 950;
+      cursor: pointer;
+    }
+
+    .main-content {
+      margin-right: var(--sidebar-width);
+    }
+
+    /* Public Hero & Sections */
+    .hero {
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-soft);
+      padding: 44px 24px;
+    }
+
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .hero-logo {
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid var(--accent);
+      flex-shrink: 0;
+      background-color: #fff;
+    }
+
+    .hero-text .diocese {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .hero-text h2 {
+      font-size: 1.75rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .motto-badge {
+      background-color: var(--primary-light);
+      color: var(--primary);
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .location-pill {
+      background-color: var(--bg-main);
+      border: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.86rem;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 36px 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .section-header h3 {
+      font-size: 1.35rem;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    .section-header::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: var(--border-soft);
+    }
+
+    .about-box {
+      background-color: var(--bg-card);
+      border-radius: 14px;
+      padding: 26px;
+      border: 1px solid var(--border-soft);
+      border-right: 4px solid var(--accent);
+    }
+
+    .about-placeholder {
+      background-color: var(--bg-main);
+      border: 1px dashed #D8D1C9;
+      border-radius: 10px;
+      padding: 22px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.96rem;
+    }
+
+    .years-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .year-card {
+      background-color: var(--bg-card);
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid var(--border-soft);
+      border-top: 3px solid var(--primary);
+    }
+
+    .year-card h4 {
+      font-size: 1.12rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .subject-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .subject-list li {
+      font-size: 0.92rem;
+      color: var(--text-dark);
+      padding: 6px 12px;
+      background-color: var(--bg-main);
+      border-radius: 8px;
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .course-card {
+      background-color: var(--bg-card);
+      border-radius: 12px;
+      padding: 16px 18px;
+      border: 1px solid var(--border-soft);
+      border-right: 3px solid var(--accent);
+    }
+
+    .course-subject {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 3px;
+    }
+
+    .course-teacher {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .info-card {
+      background-color: var(--bg-card);
+      border-radius: 12px;
+      padding: 16px 18px;
+      border: 1px solid var(--border-soft);
+    }
+
+    .info-role {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .info-name {
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .contact-box {
+      background-color: var(--bg-card);
+      border-radius: 14px;
+      padding: 26px;
+      border: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .contact-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--whatsapp);
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.94rem;
+      transition: opacity 0.2s;
+    }
+
+    .btn-whatsapp:hover { opacity: 0.92; }
+
+    footer {
+      background-color: var(--bg-card);
+      border-top: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      text-align: center;
+      padding: 20px 16px;
+      margin-top: 24px;
+      font-size: 0.86rem;
+    }
+
+    /* Portal Modal & Dashboard UI */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(25, 20, 18, 0.55);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop.active { display: flex; }
+
+    .login-card {
+      background: var(--bg-card);
+      width: 100%;
+      max-width: 420px;
+      border-radius: 16px;
+      padding: 28px 24px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      background: var(--bg-main);
+      border: 1px solid var(--border-soft);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .login-header img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .login-header h3 {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .login-header p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--text-dark);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #D8D1C9;
+      border-radius: 9px;
+      font-size: 0.94rem;
+      background: var(--bg-main);
+      color: var(--text-dark);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #FFF;
+    }
+
+    .alert-box {
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-size: 0.86rem;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    .alert-danger {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid #F5B7B1;
+    }
+
+    .alert-success {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid #A9DFBF;
+    }
+
+    /* Dashboard Overlay View */
+    .portal-view {
+      display: none;
+      min-height: 100vh;
+      background: var(--bg-main);
+    }
+
+    .portal-view.active { display: block; }
+
+    .portal-topbar {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-soft);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 800;
+    }
+
+    .portal-user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .role-badge {
+      background: var(--accent-light);
+      color: var(--primary);
+      border: 1px solid var(--accent);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-primary { background: var(--primary); color: #FFF; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-outline { background: var(--bg-main); color: var(--text-dark); border: 1px solid var(--border-soft); }
+    .btn-danger { background: var(--danger); color: #FFF; }
+    .btn-success { background: var(--success); color: #FFF; }
+
+    .portal-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 16px 20px 0;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 9px 16px;
+      border-radius: 10px 10px 0 0;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #FFF;
+      border-color: var(--primary);
+    }
+
+    .portal-body {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .dash-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .dash-panel.active { display: block; }
+
+    .dash-panel h4 {
+      color: var(--primary);
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: right;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    th {
+      background: var(--bg-main);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .status-active { background: var(--success-bg); color: var(--success); }
+    .status-banned { background: var(--danger-bg); color: var(--danger); }
+    .status-pending { background: var(--warning-bg); color: var(--warning); }
+
+    .penalty-banner {
+      background: var(--danger-bg);
+      border: 1px solid #F5B7B1;
+      border-right: 4px solid var(--danger);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .penalty-banner strong { color: var(--danger); display: block; margin-bottom: 4px; }
+
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(100%); }
+      .nav-checkbox:checked ~ .sidebar { transform: translateX(0); }
+      .nav-checkbox:checked ~ .overlay { display: block; }
+      .mobile-topbar { display: flex; }
+      .main-content { margin-right: 0; }
+      .hero-inner { flex-direction: column; text-align: center; }
+      .hero-meta { justify-content: center; }
+      .hero-text h2 { font-size: 1.45rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PUBLIC SITE WRAPPER -->
+  <div id="public-site">
+    <input type="checkbox" id="nav-toggle" class="nav-checkbox" aria-hidden="true">
+
+    <div class="mobile-topbar">
+      <div class="mobile-title">
+        <img src="https://i.ibb.co/bRgYmq8h/IMG-20260928-WA0003.jpg" alt="شعار مدرسة القديس سلوان">
+        <span>مدرسة القديس سلوان</span>
+      </div>
+      <label for="nav-toggle" class="menu-toggle" aria-label="القائمة">☰</label>
+    </div>
+
+    <label for="nav-toggle" class="overlay" aria-hidden="true"></label>
+
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-brand">
+          <img src="https://i.ibb.co/bRgYmq8h/IMG-20260928-WA0003.jpg" alt="شعار مدرسة القديس سلوان">
+          <h1>مدرسة القديس سلوان</h1>
+          <span>للتنشئة المسيحية</span>
+        </div>
+
+        <ul class="sidebar-nav">
+          <li><a href="#home" onclick="closeMobileMenu()">🏠 الرئيسية</a></li>
+          <li><a href="#about" onclick="closeMobileMenu()">📖 النبذة التعريفية</a></li>
+          <li><a href="#years" onclick="closeMobileMenu()">🎓 السنوات الدراسية</a></li>
+          <li><a href="#courses" onclick="closeMobileMenu()">📚 المواد والمدرسون</a></li>
+          <li><a href="#admin" onclick="closeMobileMenu()">🏛️ الإدارة والمقر</a></li>
+          <li><a href="#contact" onclick="closeMobileMenu()">💬 التواصل</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <button type="button" class="btn-login" onclick="openLoginModal()">
+          🔐 بوابة الدخول والحسابات
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section id="home" class="hero">
+        <div class="hero-inner">
+          <img src="https://i.ibb.co/bRgYmq8h/IMG-20260928-WA0003.jpg" alt="شعار المدرسة" class="hero-logo">
+          <div class="hero-text">
+            <p class="diocese">مطرانية حمص وتوابعها للروم الأرثوذكس</p>
+            <h2>مدرسة القديس سلوان للتنشئة المسيحية</h2>
+            <div class="hero-meta">
+              <span class="motto-badge">« فتّشوا الكتب »</span>
+              <span class="location-pill">المقر: المدرسة الغسانية الثانوية - بستان الديوان</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="container">
+        <div class="section-header">
+          <h3>النبذة التعريفية</h3>
+        </div>
+        <div class="about-box">
+          <div class="about-placeholder">
+            <p><strong>[ مساحة مخصصة للنبذة التعريفية ]</strong></p>
+            <p style="font-size: 0.88rem; margin-top: 6px;">سنقوم بتعبئة النبذة هنا لاحقاً حسب رغبتك.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="years" class="container">
+        <div class="section-header">
+          <h3>السنوات الدراسية (3 سنوات)</h3>
+        </div>
+        <div class="years-grid">
+          <div class="year-card">
+            <h4>السنة الأولى</h4>
+            <ul class="subject-list">
+              <li>مدخل للحياة الروحية</li>
+              <li>مدخل عهد جديد</li>
+              <li>مدخل عهد قديم</li>
+              <li>مدخل عقائد</li>
+              <li>ليتورجيا</li>
+              <li>تاريخ كنيسة</li>
+            </ul>
+          </div>
+
+          <div class="year-card">
+            <h4>السنة الثانية</h4>
+            <ul class="subject-list">
+              <li>تربية وتنشئة</li>
+              <li>عهد قديم</li>
+              <li>آباء 1</li>
+              <li>عقائد</li>
+              <li>عهد جديد</li>
+              <li>ليتورجيا</li>
+            </ul>
+          </div>
+
+          <div class="year-card">
+            <h4>السنة الثالثة</h4>
+            <ul class="subject-list">
+              <li>عهد قديم</li>
+              <li>آباء 2</li>
+              <li>تاريخ كنيسة</li>
+              <li>بولسيات</li>
+              <li>أخلاق</li>
+              <li>بدع وشيع</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="courses" class="container">
+        <div class="section-header">
+          <h3>المواد والمدرسون</h3>
+        </div>
+        <div class="courses-grid">
+          <div class="course-card">
+            <div class="course-subject">العهد القديم</div>
+            <div class="course-teacher">قدس الأب أثناسيوس مخول</div>
+          </div>
+          <div class="course-card">
+            <div class="course-subject">العهد الجديد والبولسيات</div>
+            <div class="course-teacher">الأخ أيمن خاتون</div>
+          </div>
+          <div class="course-card">
+            <div class="course-subject">الآباء</div>
+            <div class="course-teacher">قدس الأب يوحنا ليوس</div>
+          </div>
+          <div class="course-card">
+            <div class="course-subject">مدخل للحياة الروحية</div>
+            <div class="course-teacher">قدس الأب سلوان صنيج</div>
+          </div>
+          <div class="course-card">
+            <div class="course-subject">التربية والتنشئة</div>
+            <div class="course-teacher">الأخت وفاء خاتون</div>
+          </div>
+          <div class="course-card">
+            <div class="course-subject">العقائد والبدع والشيع</div>
+            <div class="course-teacher">قدس الأرشمندريت سيرجيوس عدرا</div>
+          </div>
+          <div class="course-card">
+            <div class="course-subject">الأخلاق</div>
+            <div class="course-teacher">الأخ زياد صبحة</div>
+          </div>
+          <div class="course-card">
+            <div class="course-subject">الليتورجيا</div>
+            <div class="course-teacher">الشماس نيقولاوس وسوف</div>
+          </div>
+          <div class="course-card">
+            <div class="course-subject">تاريخ الكنيسة</div>
+            <div class="course-teacher">الأخ نوار سكر</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="admin" class="container">
+        <div class="section-header">
+          <h3>الإدارة والمقر</h3>
+        </div>
+        <div class="admin-grid">
+          <div class="info-card">
+            <span class="info-role">المالك</span>
+            <div class="info-name">مطران حمص وتوابعها للروم الأرثوذكس</div>
+          </div>
+          <div class="info-card">
+            <span class="info-role">المدير</span>
+            <div class="info-name">قدس الأرشمندريت سيرجيوس عدرا</div>
+          </div>
+          <div class="info-card">
+            <span class="info-role">أمين السر</span>
+            <div class="info-name">الأخ جورج العسس</div>
+          </div>
+          <div class="info-card">
+            <span class="info-role">المقر</span>
+            <div class="info-name">المدرسة الغسانية الثانوية - بستان الديوان</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="container">
+        <div class="section-header">
+          <h3>التواصل</h3>
+        </div>
+        <div class="contact-box">
+          <div>
+            <strong style="color: var(--primary);">أمانة السر — الأخ جورج العسس</strong>
+            <p>للاستفسارات والتواصل المباشر عبر واتساب</p>
+          </div>
+          <a href="https://wa.me/963941512668" target="_blank" class="btn-whatsapp">
+            <span>واتساب: 0941512668</span>
+          </a>
+        </div>
+      </section>
+
+      <footer>
+        مدرسة القديس سلوان للتنشئة المسيحية — مطرانية حمص وتوابعها للروم الأرثوذكس
+      </footer>
+    </main>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="login-modal" class="modal-backdrop">
+    <div class="login-card">
+      <button type="button" class="modal-close" onclick="closeLoginModal()">✕</button>
+      <div class="login-header">
+        <img src="https://i.ibb.co/bRgYmq8h/IMG-20260928-WA0003.jpg" alt="شعار المدرسة">
+        <h3>بوابة الحسابات</h3>
+        <p>أدخل اسم المستخدم وكلمة المرور المخصصة من الإدارة</p>
+      </div>
+
+      <div id="login-error" class="alert-box alert-danger"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="username-input">اسم المستخدم (أو البريد الإلكتروني)</label>
+          <input type="text" id="username-input" class="form-control" placeholder="مثال: george أو sergios" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="password-input">كلمة المرور</label>
+          <input type="password" id="password-input" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" id="login-submit-btn" class="btn-login">دخول إلى الحساب</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATED PORTAL VIEW -->
+  <div id="portal-view" class="portal-view">
+    <header class="portal-topbar">
+      <div class="portal-user-info">
+        <strong id="portal-user-name" style="color: var(--primary);">اسم المستخدم</strong>
+        <span id="portal-user-role" class="role-badge">الدور</span>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn-sm btn-outline" onclick="showPublicSite()">الواجهة الرئيسية</button>
+        <button type="button" class="btn-sm btn-danger" onclick="handleLogout()">تسجيل خروج</button>
+      </div>
+    </header>
+
+    <div id="portal-tabs" class="portal-tabs"></div>
+
+    <div class="portal-body">
+      <div id="portal-toast" class="alert-box"></div>
+
+      <!-- TAB: USERS & BANS (Director & Secretary) -->
+      <div id="panel-users" class="dash-panel">
+        <h4>إدارة الحسابات والصلاحيات والحظر</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>الاسم الكامل</label>
+            <input type="text" id="new-user-name" class="form-control" placeholder="الاسم الثلاثي">
+          </div>
+          <div class="form-group">
+            <label>اسم المستخدم للدخول</label>
+            <input type="text" id="new-user-username" class="form-control" placeholder="مثال: student1">
+          </div>
+          <div class="form-group">
+            <label>كلمة المرور (6 أحرف على الأقل)</label>
+            <input type="text" id="new-user-pass" class="form-control" placeholder="كلمة مرور جاهزة">
+          </div>
+          <div class="form-group">
+            <label>نوع الحساب</label>
+            <select id="new-user-role" class="form-control">
+              <option value="student">طالب</option>
+              <option value="teacher">مدرس</option>
+              <option value="secretary">أمين سر</option>
+              <option value="director">مدير</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>السنة الدراسية / المادة</label>
+            <input type="text" id="new-user-meta" class="form-control" placeholder="السنة الأولى / اسم المادة">
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn-sm btn-primary" onclick="createAccountFromPortal()">+ إنشاء حساب وتفعيله</button>
+          <button type="button" id="seed-staff-btn" class="btn-sm btn-outline" onclick="seedStaffDirectory()">تحديث دليل الإدارة والمدرسين العشرة</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>اسم المستخدم</th>
+                <th>الدور</th>
+                <th>التفاصيل</th>
+                <th>الحالة</th>
+                <th>إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: PENALTIES (Director & Secretary) -->
+      <div id="panel-penalties" class="dash-panel">
+        <h4>رفع وإدارة العقوبات على الطلاب</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>اسم الطالب (أو اسم المستخدم)</label>
+            <select id="penalty-student-select" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label>نوع العقوبة / التنبيه</label>
+            <input type="text" id="penalty-title" class="form-control" placeholder="مثال: إنذار غياب / تنبيه إداري">
+          </div>
+          <div class="form-group">
+            <label>التفاصيل والسبب</label>
+            <input type="text" id="penalty-reason" class="form-control" placeholder="شرح سبب العقوبة">
+          </div>
+        </div>
+        <button type="button" class="btn-sm btn-danger" onclick="issuePenalty()">رفع العقوبة على حساب الطالب</button>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الطالب</th>
+                <th>العقوبة</th>
+                <th>السبب</th>
+                <th>بواسطة</th>
+                <th>إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="penalties-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: LESSONS (Secretary, Director, Teachers) -->
+      <div id="panel-lessons" class="dash-panel">
+        <h4>إضافة وتحميل الدروس والمقررات</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>السنة الدراسية</label>
+            <select id="lesson-year" class="form-control">
+              <option value="السنة الأولى">السنة الأولى</option>
+              <option value="السنة الثانية">السنة الثانية</option>
+              <option value="السنة الثالثة">السنة الثالثة</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>المادة</label>
+            <input type="text" id="lesson-subject" class="form-control" placeholder="مثال: العقائد / تاريخ الكنيسة">
+          </div>
+          <div class="form-group">
+            <label>عنوان الدرس / المحاضرة</label>
+            <input type="text" id="lesson-title" class="form-control" placeholder="عنوان الدرس">
+          </div>
+          <div class="form-group">
+            <label>رابط الملف (Google Drive / PDF / YouTube)</label>
+            <input type="url" id="lesson-url" class="form-control" placeholder="https://...">
+          </div>
+        </div>
+        <button type="button" class="btn-sm btn-primary" onclick="addLesson()">+ نشر الدرس للطلاب</button>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>السنة</th>
+                <th>المادة</th>
+                <th>عنوان الدرس</th>
+                <th>المدرس / الناشر</th>
+                <th>الرابط</th>
+              </tr>
+            </thead>
+            <tbody id="lessons-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: ATTENDANCE & EXCUSES (Teachers, Director, Secretary) -->
+      <div id="panel-attendance" class="dash-panel">
+        <h4>متابعة الحضور والغياب والاعتذارات</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>الطالب</label>
+            <select id="att-student-select" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label>المادة</label>
+            <input type="text" id="att-subject" class="form-control" placeholder="اسم المادة">
+          </div>
+          <div class="form-group">
+            <label>التاريخ</label>
+            <input type="date" id="att-date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>الحالة</label>
+            <select id="att-status" class="form-control">
+              <option value="حاضر">حاضر</option>
+              <option value="غائب">غائب</option>
+              <option value="غائب بعذر">غائب بعذر</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="btn-sm btn-primary" onclick="recordAttendance()">حفظ سجل الحضور</button>
+
+        <h4 style="margin-top: 24px;">اعتذارات الغياب المقدمة من الطلاب</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الطالب</th>
+                <th>التاريخ</th>
+                <th>السبب</th>
+                <th>حالة الاعتذار</th>
+                <th>إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="excuses-admin-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: GRADES (Teachers, Director, Secretary) -->
+      <div id="panel-grades" class="dash-panel">
+        <h4>إدخال النتائج الامتحانية</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>الطالب</label>
+            <select id="grade-student-select" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label>المادة</label>
+            <input type="text" id="grade-subject" class="form-control" placeholder="اسم المادة">
+          </div>
+          <div class="form-group">
+            <label>العلامة (من 100)</label>
+            <input type="number" id="grade-score" class="form-control" min="0" max="100" placeholder="85">
+          </div>
+          <div class="form-group">
+            <label>ملاحظة</label>
+            <input type="text" id="grade-note" class="form-control" placeholder="امتحان فصلي / نهائي">
+          </div>
+        </div>
+        <button type="button" class="btn-sm btn-primary" onclick="recordGrade()">حفظ العلامة</button>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الطالب</th>
+                <th>المادة</th>
+                <th>العلامة</th>
+                <th>ملاحظة</th>
+                <th>المدرس</th>
+              </tr>
+            </thead>
+            <tbody id="grades-admin-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: STUDENT VIEW (Student) -->
+      <div id="panel-student" class="dash-panel">
+        <h4>ملفي الدراسي الشخصي</h4>
+        <div id="student-penalties-container"></div>
+
+        <h4 style="margin-top: 18px;">تقديم اعتذار عن غياب</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>تاريخ الغياب</label>
+            <input type="date" id="student-excuse-date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>سبب الاعتذار</label>
+            <input type="text" id="student-excuse-reason" class="form-control" placeholder="اكتب سبب الغياب بوضوح">
+          </div>
+        </div>
+        <button type="button" class="btn-sm btn-primary" onclick="submitStudentExcuse()">إرسال الاعتذار للإدارة والمدرسين</button>
+
+        <h4 style="margin-top: 24px;">سجل الحضور والغياب</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>التاريخ</th>
+                <th>المادة</th>
+                <th>الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="student-att-body"></tbody>
+          </table>
+        </div>
+
+        <h4 style="margin-top: 24px;">النتائج الامتحانية</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>المادة</th>
+                <th>العلامة</th>
+                <th>ملاحظة</th>
+              </tr>
+            </thead>
+            <tbody id="student-grades-body"></tbody>
+          </table>
+        </div>
+
+        <h4 style="margin-top: 24px;">الدروس المحمّلة</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>السنة</th>
+                <th>المادة</th>
+                <th>الدرس</th>
+                <th>الرابط</th>
+              </tr>
+            </thead>
+            <tbody id="student-lessons-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE SDK & PORTAL LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, addDoc, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDz1DlzI3Runhxu9Ww8gYYVAHWMIE15hIw",
+      authDomain: "salwan-school.firebaseapp.com",
+      projectId: "salwan-school",
+      storageBucket: "salwan-school.firebasestorage.app",
+      messagingSenderId: "385741690814",
+      appId: "1:385741690814:web:2df317fe7645836dcfcbef",
+      measurementId: "G-GF9F8TTCHJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    // Secondary app instance to create student/teacher accounts without logging out current admin
+    const secondaryApp = initializeApp(firebaseConfig, "SecondaryAdminHelper");
+    const secondaryAuth = getAuth(secondaryApp);
+    const db = getFirestore(app);
+
+    const STAFF_DIRECTORY = [
+      { username: "sergios", name: "قدس الأرشمندريت سيرجيوس عدرا", role: "director", meta: "المدير — العقائد والبدع والشيع" },
+      { username: "george", name: "الأخ جورج العسس", role: "secretary", meta: "أمين السر" },
+      { username: "athanasius", name: "قدس الأب أثناسيوس مخول", role: "teacher", meta: "العهد القديم" },
+      { username: "ayman", name: "الأخ أيمن خاتون", role: "teacher", meta: "العهد الجديد والبولسيات" },
+      { username: "yohanna", name: "قدس الأب يوحنا ليوس", role: "teacher", meta: "الآباء" },
+      { username: "silouan", name: "قدس الأب سلوان صنيج", role: "teacher", meta: "مدخل للحياة الروحية" },
+      { username: "wafaa", name: "الأخت وفاء خاتون", role: "teacher", meta: "التربية والتنشئة" },
+      { username: "ziad", name: "الأخ زياد صبحة", role: "teacher", meta: "الأخلاق" },
+      { username: "nicolaos", name: "الشماس نيقولاوس وسوف", role: "teacher", meta: "الليتورجيا" },
+      { username: "nawar", name: "الأخ نوار سكر", role: "teacher", meta: "تاريخ الكنيسة" }
+    ];
+
+    const ROLE_LABELS = {
+      director: "المدير العام",
+      secretary: "أمين السر",
+      teacher: "مدرس",
+      student: "طالب"
+    };
+
+    let currentProfile = null;
+    let cachedUsers = [];
+
+    function normalizeEmail(input) {
+      const clean = input.trim().toLowerCase();
+      return clean.includes("@") ? clean : `${clean}@salwan.school`;
+    }
+
+    function extractUsername(email) {
+      return email.split("@")[0].toLowerCase();
+    }
+
+    function showToast(msg, isError = false) {
+      const el = document.getElementById("portal-toast");
+      el.textContent = msg;
+      el.className = `alert-box ${isError ? "alert-danger" : "alert-success"}`;
+      el.style.display = "block";
+      setTimeout(() => { el.style.display = "none"; }, 4500);
+    }
+
+    // UI Modal Helpers
+    window.openLoginModal = () => {
+      document.getElementById("login-error").style.display = "none";
+      document.getElementById("login-modal").classList.add("active");
+    };
+    window.closeLoginModal = () => {
+      document.getElementById("login-modal").classList.remove("active");
+    };
+    window.closeMobileMenu = () => {
+      const cb = document.getElementById("nav-toggle");
+      if (cb) cb.checked = false;
+    };
+    window.showPublicSite = () => {
+      document.getElementById("portal-view").classList.remove("active");
+      document.getElementById("public-site").style.display = "block";
+    };
+
+    // Login Handler
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const rawUser = document.getElementById("username-input").value;
+      const password = document.getElementById("password-input").value;
+      const errBox = document.getElementById("login-error");
+      const btn = document.getElementById("login-submit-btn");
+
+      errBox.style.display = "none";
+      btn.disabled = true;
+      btn.textContent = "جارٍ التحقق...";
+
+      try {
+        const email = normalizeEmail(rawUser);
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        await loadUserPortal(cred.user);
+        closeLoginModal();
+      } catch (err) {
+        errBox.textContent = "تعذر تسجيل الدخول: تأكد من اسم المستخدم وكلمة المرور أو تواصل مع أمانة السر.";
+        errBox.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "دخول إلى الحساب";
+      }
+    });
+
+    window.handleLogout = async () => {
+      await signOut(auth);
+      currentProfile = null;
+      showPublicSite();
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        await loadUserPortal(user);
+      }
+    });
+
+    async function loadUserPortal(user) {
+      const uname = extractUsername(user.email);
+      const userRef = doc(db, "users", uname);
+      let snap = await getDoc(userRef);
+
+      if (!snap.exists()) {
+        const preset = STAFF_DIRECTORY.find(s => s.username === uname);
+        const profileData = preset ? {
+          username: preset.username,
+          name: preset.name,
+          role: preset.role,
+          meta: preset.meta,
+          banned: false
+        } : {
+          username: uname,
+          name: uname,
+          role: "student",
+          meta: "طالب",
+          banned: false
+        };
+        await setDoc(userRef, profileData);
+        snap = await getDoc(userRef);
+      }
+
+      currentProfile = snap.data();
+
+      if (currentProfile.banned) {
+        await signOut(auth);
+        const errBox = document.getElementById("login-error");
+        errBox.textContent = "تم إيقاف هذا الحساب من قبل إدارة المدرسة. يرجى مراجعة الإدارة.";
+        errBox.style.display = "block";
+        openLoginModal();
+        return;
+      }
+
+      document.getElementById("public-site").style.display = "none";
+      document.getElementById("portal-view").classList.add("active");
+      document.getElementById("portal-user-name").textContent = currentProfile.name;
+      document.getElementById("portal-user-role").textContent = ROLE_LABELS[currentProfile.role] || currentProfile.role;
+
+      setupTabsForRole(currentProfile.role);
+      await refreshAllPortalData();
+    }
+
+    function setupTabsForRole(role) {
+      const tabsContainer = document.getElementById("portal-tabs");
+      tabsContainer.innerHTML = "";
+      document.querySelectorAll(".dash-panel").forEach(p => p.classList.remove("active"));
+
+      const roleTabs = [];
+      if (role === "director" || role === "secretary") {
+        roleTabs.push({ id: "panel-users", label: "👥 الحسابات والحظر" });
+        roleTabs.push({ id: "panel-penalties", label: "⚠️ العقوبات" });
+        roleTabs.push({ id: "panel-lessons", label: "📚 الدروس" });
+        roleTabs.push({ id: "panel-attendance", label: "📋 الحضور والاعتذارات" });
+        roleTabs.push({ id: "panel-grades", label: "📝 النتائج" });
+      } else if (role === "teacher") {
+        roleTabs.push({ id: "panel-attendance", label: "📋 الحضور والاعتذارات" });
+        roleTabs.push({ id: "panel-lessons", label: "📚 الدروس" });
+        roleTabs.push({ id: "panel-grades", label: "📝 النتائج الامتحانية" });
+      } else {
+        roleTabs.push({ id: "panel-student", label: "🎓 ملفي الدراسي" });
+      }
+
+      // Restrict role creation dropdown for Secretary (cannot create Director)
+      const roleSelect = document.getElementById("new-user-role");
+      if (roleSelect) {
+        Array.from(roleSelect.options).forEach(opt => {
+          opt.disabled = (role === "secretary" && opt.value === "director");
+        });
+      }
+
+      roleTabs.forEach((t, idx) => {
+        const btn = document.createElement("button");
+        btn.className = `tab-btn ${idx === 0 ? "active" : ""}`;
+        btn.textContent = t.label;
+        btn.onclick = () => {
+          document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".dash-panel").forEach(p => p.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById(t.id).classList.add("active");
+        };
+        tabsContainer.appendChild(btn);
+        if (idx === 0) document.getElementById(t.id).classList.add("active");
+      });
+    }
+
+    async function refreshAllPortalData() {
+      const role = currentProfile.role;
+
+      // Load Users for Admin/Teachers
+      if (role !== "student") {
+        const usersSnap = await getDocs(collection(db, "users"));
+        cachedUsers = usersSnap.docs.map(d => d.data());
+        renderUsersTable();
+        populateStudentDropdowns();
+      }
+
+      // Load Penalties
+      const penSnap = await getDocs(collection(db, "penalties"));
+      const penalties = penSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (role === "director" || role === "secretary") {
+        renderPenaltiesTable(penalties);
+      }
+      if (role === "student") {
+        renderStudentPenalties(penalties.filter(p => p.studentUsername === currentProfile.username));
+      }
+
+      // Load Lessons
+      const lessSnap = await getDocs(collection(db, "lessons"));
+      const lessons = lessSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderLessonsTables(lessons);
+
+      // Load Attendance & Excuses
+      const attSnap = await getDocs(collection(db, "attendance"));
+      const attList = attSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (role === "student") {
+        renderStudentAttendance(attList.filter(a => a.studentUsername === currentProfile.username));
+      }
+
+      const excSnap = await getDocs(collection(db, "excuses"));
+      const excuses = excSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (role !== "student") {
+        renderExcusesAdminTable(excuses);
+      }
+
+      // Load Grades
+      const grdSnap = await getDocs(collection(db, "grades"));
+      const grades = grdSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (role === "student") {
+        renderStudentGrades(grades.filter(g => g.studentUsername === currentProfile.username));
+      } else {
+        renderGradesAdminTable(grades);
+      }
+    }
+
+    function populateStudentDropdowns() {
+      const students = cachedUsers.filter(u => u.role === "student");
+      const optionsHtml = students.length
+        ? students.map(s => `<option value="${s.username}">${s.name} (${s.username})</option>`).join("")
+        : `<option value="">لا يوجد طلاب مضافون بعد</option>`;
+
+      ["penalty-student-select", "att-student-select", "grade-student-select"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = optionsHtml;
+      });
+    }
+
+    function renderUsersTable() {
+      const tbody = document.getElementById("users-table-body");
+      if (!tbody) return;
+      tbody.innerHTML = cachedUsers.map(u => {
+        const canBan = (currentProfile.role === "director" && u.username !== currentProfile.username) ||
+                       (currentProfile.role === "secretary" && u.role === "student");
+        const actionBtn = canBan
+          ? `<button class="btn-sm ${u.banned ? "btn-success" : "btn-danger"}" onclick="toggleBanUser('${u.username}', ${!u.banned})">${u.banned ? "فك الحظر" : "حظر"}</button>`
+          : `<span style="color:var(--text-muted);font-size:0.8rem;">—</span>`;
+
+        return `
+          <tr>
+            <td>${u.name}</td>
+            <td><code>${u.username}</code></td>
+            <td>${ROLE_LABELS[u.role] || u.role}</td>
+            <td>${u.meta || ""}</td>
+            <td><span class="status-pill ${u.banned ? "status-banned" : "status-active"}">${u.banned ? "محظور" : "نشط"}</span></td>
+            <td>${actionBtn}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    window.createAccountFromPortal = async () => {
+      const name = document.getElementById("new-user-name").value.trim();
+      const username = document.getElementById("new-user-username").value.trim().toLowerCase();
+      const pass = document.getElementById("new-user-pass").value.trim();
+      const role = document.getElementById("new-user-role").value;
+      const meta = document.getElementById("new-user-meta").value.trim();
+
+      if (!name || !username || pass.length < 6) {
+        showToast("يرجى إدخال الاسم واسم المستخدم وكلمة مرور من 6 أحرف على الأقل.", true);
+        return;
+      }
+
+      if (currentProfile.role === "secretary" && role !== "student" && role !== "teacher") {
+        showToast("صلاحية أمين السر تقتصر على إنشاء حسابات الطلاب والمدرسين.", true);
+        return;
+      }
+
+      try {
+        const email = normalizeEmail(username);
+        await createUserWithEmailAndPassword(secondaryAuth, email, pass);
+        await signOut(secondaryAuth);
+
+        await setDoc(doc(db, "users", username), {
+          username,
+          name,
+          role,
+          meta: meta || ROLE_LABELS[role],
+          banned: false
+        });
+
+        document.getElementById("new-user-name").value = "";
+        document.getElementById("new-user-username").value = "";
+        document.getElementById("new-user-pass").value = "";
+        document.getElementById("new-user-meta").value = "";
+
+        showToast(`تم إنشاء حساب ${name} (${username}) بنجاح!`);
+        await refreshAllPortalData();
+      } catch (err) {
+        showToast("حدث خطأ أثناء إنشاء الحساب (قد يكون اسم المستخدم مستعملاً مسبقاً).", true);
+      }
+    };
+
+    window.seedStaffDirectory = async () => {
+      for (const staff of STAFF_DIRECTORY) {
+        const ref = doc(db, "users", staff.username);
+        const snap = await getDoc(ref);
+        if (!snap.exists()) {
+          await setDoc(ref, { ...staff, banned: false });
+        }
+      }
+      showToast("تمت مزامنة دليل الإدارة والمدرسين العشرة في قاعدة البيانات.");
+      await refreshAllPortalData();
+    };
+
+    window.toggleBanUser = async (username, banState) => {
+      await updateDoc(doc(db, "users", username), { banned: banState });
+      showToast(banState ? `تم حظر الحساب (${username}).` : `تم فك الحظر عن (${username}).`);
+      await refreshAllPortalData();
+    };
+
+    // Penalties
+    window.issuePenalty = async () => {
+      const studentUsername = document.getElementById("penalty-student-select").value;
+      const title = document.getElementById("penalty-title").value.trim();
+      const reason = document.getElementById("penalty-reason").value.trim();
+
+      if (!studentUsername || !title) {
+        showToast("يرجى اختيار الطالب وكتابة عنوان العقوبة.", true);
+        return;
+      }
+
+      const studentObj = cachedUsers.find(u => u.username === studentUsername);
+      await addDoc(collection(db, "penalties"), {
+        studentUsername,
+        studentName: studentObj ? studentObj.name : studentUsername,
+        title,
+        reason,
+        issuedBy: currentProfile.name,
+        createdAt: new Date().toISOString().split("T")[0]
+      });
+
+      document.getElementById("penalty-title").value = "";
+      document.getElementById("penalty-reason").value = "";
+      showToast("تم رفع العقوبة وستظهر فوراً في حساب الطالب.");
+      await refreshAllPortalData();
+    };
+
+    window.removePenalty = async (id) => {
+      await deleteDoc(doc(db, "penalties", id));
+      showToast("تم إلغاء العقوبة.");
+      await refreshAllPortalData();
+    };
+
+    function renderPenaltiesTable(list) {
+      const tbody = document.getElementById("penalties-table-body");
+      if (!tbody) return;
+      tbody.innerHTML = list.map(p => `
+        <tr>
+          <td>${p.studentName}</td>
+          <td><strong>${p.title}</strong></td>
+          <td>${p.reason || "—"}</td>
+          <td>${p.issuedBy}</td>
+          <td><button class="btn-sm btn-outline" onclick="removePenalty('${p.id}')">حذف</button></td>
+        </tr>
+      `).join("");
+    }
+
+    function renderStudentPenalties(list) {
+      const container = document.getElementById("student-penalties-container");
+      if (!container) return;
+      if (!list.length) {
+        container.innerHTML = `<p style="color:var(--success);font-size:0.9rem;">لا توجد أي عقوبات أو تنبيهات مسجلة على حسابك.</p>`;
+        return;
+      }
+      container.innerHTML = list.map(p => `
+        <div class="penalty-banner">
+          <strong>⚠️ ${p.title} (${p.createdAt || ""})</strong>
+          <div>${p.reason || ""} — <small>بواسطة: ${p.issuedBy}</small></div>
+        </div>
+      `).join("");
+    }
+
+    // Lessons
+    window.addLesson = async () => {
+      const year = document.getElementById("lesson-year").value;
+      const subject = document.getElementById("lesson-subject").value.trim();
+      const title = document.getElementById("lesson-title").value.trim();
+      const url = document.getElementById("lesson-url").value.trim();
+
+      if (!subject || !title) {
+        showToast("يرجى إدخال اسم المادة وعنوان الدرس.", true);
+        return;
+      }
+
+      await addDoc(collection(db, "lessons"), {
+        year,
+        subject,
+        title,
+        url,
+        author: currentProfile.name
+      });
+
+      document.getElementById("lesson-subject").value = "";
+      document.getElementById("lesson-title").value = "";
+      document.getElementById("lesson-url").value = "";
+      showToast("تم نشر الدرس بنجاح.");
+      await refreshAllPortalData();
+    };
+
+    function renderLessonsTables(list) {
+      const html = list.map(l => `
+        <tr>
+          <td>${l.year}</td>
+          <td>${l.subject}</td>
+          <td>${l.title}</td>
+          <td>${l.author}</td>
+          <td>${l.url ? `<a href="${l.url}" target="_blank" style="color:var(--primary);font-weight:700;">فتح الدرس</a>` : "—"}</td>
+        </tr>
+      `).join("");
+
+      const adminBody = document.getElementById("lessons-table-body");
+      if (adminBody) adminBody.innerHTML = html;
+
+      const studentBody = document.getElementById("student-lessons-body");
+      if (studentBody) {
+        studentBody.innerHTML = list.map(l => `
+          <tr>
+            <td>${l.year}</td>
+            <td>${l.subject}</td>
+            <td>${l.title}</td>
+            <td>${l.url ? `<a href="${l.url}" target="_blank" style="color:var(--primary);font-weight:700;">فتح الدرس</a>` : "—"}</td>
+          </tr>
+        `).join("");
+      }
+    }
+
+    // Attendance & Excuses
+    window.recordAttendance = async () => {
+      const studentUsername = document.getElementById("att-student-select").value;
+      const subject = document.getElementById("att-subject").value.trim();
+      const date = document.getElementById("att-date").value;
+      const status = document.getElementById("att-status").value;
+
+      if (!studentUsername || !subject || !date) {
+        showToast("يرجى تحديد الطالب والمادة والتاريخ.", true);
+        return;
+      }
+
+      await addDoc(collection(db, "attendance"), {
+        studentUsername,
+        subject,
+        date,
+        status,
+        recordedBy: currentProfile.name
+      });
+
+      showToast("تم تسجيل حالة الحضور.");
+      await refreshAllPortalData();
+    };
+
+    window.submitStudentExcuse = async () => {
+      const date = document.getElementById("student-excuse-date").value;
+      const reason = document.getElementById("student-excuse-reason").value.trim();
+
+      if (!date || !reason) {
+        showToast("يرجى تحديد تاريخ الغياب وسبب الاعتذار.", true);
+        return;
+      }
+
+      await addDoc(collection(db, "excuses"), {
+        studentUsername: currentProfile.username,
+        studentName: currentProfile.name,
+        date,
+        reason,
+        status: "قيد المراجعة"
+      });
+
+      document.getElementById("student-excuse-reason").value = "";
+      showToast("تم إرسال اعتذار الغياب بنجاح.");
+      await refreshAllPortalData();
+    };
+
+    window.updateExcuseStatus = async (id, newStatus) => {
+      await updateDoc(doc(db, "excuses", id), { status: newStatus });
+      showToast(`تم تحديث حالة الاعتذار إلى: ${newStatus}`);
+      await refreshAllPortalData();
+    };
+
+    function renderExcusesAdminTable(list) {
+      const tbody = document.getElementById("excuses-admin-body");
+      if (!tbody) return;
+      tbody.innerHTML = list.map(ex => `
+        <tr>
+          <td>${ex.studentName}</td>
+          <td>${ex.date}</td>
+          <td>${ex.reason}</td>
+          <td><span class="status-pill ${ex.status === "مقبول" ? "status-active" : "status-pending"}">${ex.status}</span></td>
+          <td>
+            <button class="btn-sm btn-success" onclick="updateExcuseStatus('${ex.id}', 'مقبول')">قبول</button>
+            <button class="btn-sm btn-danger" onclick="updateExcuseStatus('${ex.id}', 'مرفوض')">رفض</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderStudentAttendance(list) {
+      const tbody = document.getElementById("student-att-body");
+      if (!tbody) return;
+      tbody.innerHTML = list.map(a => `
+        <tr>
+          <td>${a.date}</td>
+          <td>${a.subject}</td>
+          <td><span class="status-pill ${a.status === "حاضر" ? "status-active" : "status-banned"}">${a.status}</span></td>
+        </tr>
+      `).join("");
+    }
+
+    // Grades
+    window.recordGrade = async () => {
+      const studentUsername = document.getElementById("grade-student-select").value;
+      const subject = document.getElementById("grade-subject").value.trim();
+      const score = document.getElementById("grade-score").value;
+      const note = document.getElementById("grade-note").value.trim();
+
+      if (!studentUsername || !subject || score === "") {
+        showToast("يرجى إدخال الطالب والمادة والعلامة.", true);
+        return;
+      }
+
+      const studentObj = cachedUsers.find(u => u.username === studentUsername);
+      await addDoc(collection(db, "grades"), {
+        studentUsername,
+        studentName: studentObj ? studentObj.name : studentUsername,
+        subject,
+        score,
+        note,
+        teacher: currentProfile.name
+      });
+
+      document.getElementById("grade-score").value = "";
+      document.getElementById("grade-note").value = "";
+      showToast("تم حفظ النتيجة الامتحانية.");
+      await refreshAllPortalData();
+    };
+
+    function renderGradesAdminTable(list) {
+      const tbody = document.getElementById("grades-admin-body");
+      if (!tbody) return;
+      tbody.innerHTML = list.map(g => `
+        <tr>
+          <td>${g.studentName}</td>
+          <td>${g.subject}</td>
+          <td><strong>${g.score}</strong></td>
+          <td>${g.note || "—"}</td>
+          <td>${g.teacher}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderStudentGrades(list) {
+      const tbody = document.getElementById("student-grades-body");
+      if (!tbody) return;
+      tbody.innerHTML = list.map(g => `
+        <tr>
+          <td>${g.subject}</td>
+          <td><strong>${g.score}</strong></td>
+          <td>${g.note || "—"}</td>
+        </tr>
+      `).join("");
+    }
+  </script>
+</body>
+</html>
